@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% import 'macros.html' as macros %}
+
+{% block title %} {{super()}} Bienvenido {% endblock %}
+
+
+
+{% block content %}
+
+<div class="container-fluid banner mb-5 shadow-lg">
+    {% if username %}
+    <h1 class="text-center text-white">Bienvenido {{ username }}</h1>
+    {% endif %}
+    
+    {% if user_ip %}
+    <p class="text-center small text-white">TU IP ES {{user_ip}}</small>
+        {% else %}
+        <a href="{{ url_for('index') }}">Ir a inicio</a>
+        {% endif %}
+</div>
+
+    <div class="container w-50 m-auto">
+        <h2 class="text-center">Crear una nueva tarea</h2>
+        <form method="post" action="{{ url_for('hello') }}">
+            {{ todo_form.csrf_token }}
+            <div class="form_group">
+                {{ todo_form.description.label }}
+                {{ todo_form.description(class_="form-control") }}
+            </div>
+            {{ todo_form.submit(class_="btn btn-primary w-100 mb-5") }}
+        </form>
+        <ul class="list-group">
+            {% for todo in todos %}
+            {{ macros.render_todo(todo, delete_todo_form, update_todo_form) }}
+            {% endfor %}
+        </ul>
+    </div>
+
+    {% endblock content %}

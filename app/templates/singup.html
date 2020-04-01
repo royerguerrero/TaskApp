@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ super() }} Singup
+{% endblock title %}
+
+{% block content %}
+<div class="container-fluid banner mb-5 shadow-lg">
+    <h2 class="text-center text-white">Crea tu cuenta</h2>
+</div>
+<div class="container mt-5">
+    <form class="w-25 m-auto" method="POST" action="{{ url_for('auth.singup') }}">
+        {{ singup_form.csrf_token }}
+        <div class="form-group">
+            {{ singup_form.username.label }}
+            {{ singup_form.username(class_="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ singup_form.password.label }}
+            {{ singup_form.password(class_="form-control") }}
+        </div>
+        {{ singup_form.submit(class_="btn btn-primary w-100")}}
+    </form>
+</div>
+{% endblock content %}
